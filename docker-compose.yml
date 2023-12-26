@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build:
+      context: ./public
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Map the container's port to the host machine
+
+  backend:
+    build: ./server
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    # Other configurations for your backend service
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    # Other configurations for the MongoDB service
+
+volumes:
+  mongodb_data: # Define a volume for MongoDB data persistence
